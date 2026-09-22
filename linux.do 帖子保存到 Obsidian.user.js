@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         linux.do 帖子保存到 Obsidian
-// @namespace    https://github.com/panda-z519/linuxdo-script
-// @version      0.9.4
+// @namespace    https://linux.do/
+// @version      0.9.5
 // @author       zsq
 // @copyright    2026, zsq
 // @license      MIT
