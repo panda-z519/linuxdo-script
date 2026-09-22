@@ -1,0 +1,19 @@
+{
+  "name": "linuxdo2obsidian",
+  "version": "0.9.4",
+  "private": true,
+  "license": "MIT",
+  "description": "Save linux.do topics to Obsidian through Local REST API.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/panda-z519/linuxdo-script.git"
+  },
+  "bugs": {
+    "url": "https://github.com/panda-z519/linuxdo-script/issues"
+  },
+  "homepage": "https://github.com/panda-z519/linuxdo-script",
+  "scripts": {
+    "check": "node --check \"linux.do 帖子保存到 Obsidian.user.js\"",
+    "format": "npx --yes prettier --write \"linux.do 帖子保存到 Obsidian.user.js\" README.md package.json"
+  }
+}
