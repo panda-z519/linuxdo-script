@@ -16,8 +16,10 @@ versions/<脚本目录>/<版本号>/<脚本文件名>
 
 | 脚本            | 版本    | 文件                                                                                               |
 | --------------- | ------- | -------------------------------------------------------------------------------------------------- |
+| `save-obsidian` | `0.9.8` | [linux.do 帖子保存到 Obsidian.user.js](<save-obsidian/0.9.8/linux.do 帖子保存到 Obsidian.user.js>) |
 | `save-obsidian` | `0.9.7` | [linux.do 帖子保存到 Obsidian.user.js](<save-obsidian/0.9.7/linux.do 帖子保存到 Obsidian.user.js>) |
 | `save-obsidian` | `0.9.6` | [linux.do 帖子保存到 Obsidian.user.js](<save-obsidian/0.9.6/linux.do 帖子保存到 Obsidian.user.js>) |
+| `topic-reader`  | `5.0.7` | [linux.do 帖子弹框阅读.user.js](<topic-reader/5.0.7/linux.do 帖子弹框阅读.user.js>)                |
 | `topic-reader`  | `5.0.6` | [linux.do 帖子弹框阅读.user.js](<topic-reader/5.0.6/linux.do 帖子弹框阅读.user.js>)                |
 
 ## 生成与使用

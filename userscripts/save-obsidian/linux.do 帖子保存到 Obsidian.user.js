@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         linux.do 帖子保存到 Obsidian
 // @namespace    https://linux.do/
-// @version      0.9.7
+// @version      0.9.8
+// @updateURL    https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/userscripts/save-obsidian/linux.do%20%E5%B8%96%E5%AD%90%E4%BF%9D%E5%AD%98%E5%88%B0%20Obsidian.user.js
+// @downloadURL  https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/userscripts/save-obsidian/linux.do%20%E5%B8%96%E5%AD%90%E4%BF%9D%E5%AD%98%E5%88%B0%20Obsidian.user.js
 // @author       zsq
 // @copyright    2026, zsq
 // @license      MIT

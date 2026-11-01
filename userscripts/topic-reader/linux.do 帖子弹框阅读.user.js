@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         linux.do 帖子弹框阅读
 // @namespace    https://linux.do/
-// @version      5.0.6
+// @version      5.0.7
+// @updateURL    https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/userscripts/topic-reader/linux.do%20%E5%B8%96%E5%AD%90%E5%BC%B9%E6%A1%86%E9%98%85%E8%AF%BB.user.js
+// @downloadURL  https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/userscripts/topic-reader/linux.do%20%E5%B8%96%E5%AD%90%E5%BC%B9%E6%A1%86%E9%98%85%E8%AF%BB.user.js
 // @author       zsq
 // @license      MIT
 // @description  复用 linux.do 原生路由，在当前页面弹框阅读帖子

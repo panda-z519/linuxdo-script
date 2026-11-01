@@ -4,8 +4,8 @@
 
 | 脚本目录         | 文件                                                                                         | 当前版本 | 用途                                          |
 | ---------------- | -------------------------------------------------------------------------------------------- | -------- | --------------------------------------------- |
-| `save-obsidian/` | [linux.do 帖子保存到 Obsidian.user.js](<save-obsidian/linux.do 帖子保存到 Obsidian.user.js>) | 0.9.7    | 通过 Local REST API 把主题帖保存到 Obsidian。 |
-| `topic-reader/`  | [linux.do 帖子弹框阅读.user.js](<topic-reader/linux.do 帖子弹框阅读.user.js>)                | 5.0.6    | 在当前页面以弹框阅读主题，复用站点原生路由。  |
+| `save-obsidian/` | [linux.do 帖子保存到 Obsidian.user.js](<save-obsidian/linux.do 帖子保存到 Obsidian.user.js>) | 0.9.8    | 通过 Local REST API 把主题帖保存到 Obsidian。 |
+| `topic-reader/`  | [linux.do 帖子弹框阅读.user.js](<topic-reader/linux.do 帖子弹框阅读.user.js>)                | 5.0.7    | 在当前页面以弹框阅读主题，复用站点原生路由。  |
 
 两个脚本互相独立，可以只装其中一个。同时安装时，保存按钮会显示在阅读弹框之上。
 

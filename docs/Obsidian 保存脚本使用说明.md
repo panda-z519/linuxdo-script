@@ -17,6 +17,8 @@
 2. 新建用户脚本，将 [`linux.do 帖子保存到 Obsidian.user.js`](<../userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js>) 的全部内容粘贴进去并启用。
 3. 打开 linux.do 主题页。右下角会显示“保存到 Obsidian”和设置按钮；可按住按钮组拖动位置。
 
+脚本头部声明了 `@updateURL` / `@downloadURL`，安装后脚本管理器会按这个地址自动检查更新；请从下面的正式地址安装，手动粘贴到别处的副本不会自动更新。
+
 也可打开 [GitHub Raw 脚本文件](https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/userscripts/save-obsidian/linux.do%20%E5%B8%96%E5%AD%90%E4%BF%9D%E5%AD%98%E5%88%B0%20Obsidian.user.js)，由脚本管理器安装或更新。
 
 已发布的历史版本按版本号归档在 [`versions/save-obsidian/`](../versions/README.md)，需要回滚时复制对应版本文件的全部内容替换当前脚本。

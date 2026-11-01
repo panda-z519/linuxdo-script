@@ -122,3 +122,25 @@ test("归档快照在发布时与当前脚本一致", () => {
     );
   }
 });
+
+const raw_base =
+  "https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/";
+
+test("每个脚本都声明指向发布路径的更新地址", () => {
+  for (const script of current_scripts) {
+    const update = script.source.match(/^\/\/\s*@updateURL\s+(\S+)$/m);
+    const download = script.source.match(/^\/\/\s*@downloadURL\s+(\S+)$/m);
+    assert.ok(update, `${script.slug} 缺少 @updateURL，脚本管理器无法自动更新`);
+    assert.ok(download, `${script.slug} 缺少 @downloadURL`);
+    assert.equal(
+      update[1],
+      download[1],
+      `${script.slug} 的 @updateURL 与 @downloadURL 应指向同一地址`,
+    );
+    assert.equal(
+      decodeURIComponent(update[1]),
+      `${raw_base}userscripts/${script.slug}/${script.file}`,
+      `${script.slug} 的更新地址必须指向仓库中的实际路径`,
+    );
+  }
+});
