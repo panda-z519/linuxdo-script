@@ -1,6 +1,6 @@
 {
   "name": "linuxdo2obsidian",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "private": true,
   "license": "MIT",
   "description": "Browser userscripts for reading and saving linux.do topics.",
