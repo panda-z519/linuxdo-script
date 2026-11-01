@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         linux.do 帖子保存到 Obsidian
 // @namespace    https://linux.do/
-// @version      0.9.5
+// @version      0.9.6
 // @author       zsq
 // @copyright    2026, zsq
 // @license      MIT
@@ -54,11 +54,13 @@
 
   const style = document.createElement("style");
   style.textContent = `
+/* 层级约定：保存脚本的悬浮界面始终高于阅读弹框
+   （遮罩 2147482998、外壳 2147482999、阅读模式内原生浮层 2147483005）。 */
 #ldo-obsidian-actions {
   position: fixed;
   right: 20px;
   bottom: 24px;
-  z-index: 9999;
+  z-index: 2147483000;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -101,7 +103,7 @@
   position: fixed;
   right: 20px;
   bottom: 78px;
-  z-index: 10001;
+  z-index: 2147483006;
   max-width: min(420px, calc(100vw - 40px));
   padding: 10px 14px;
   border-radius: 8px;
@@ -123,7 +125,7 @@
 #ldo-obsidian-modal {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 2147483004;
   display: grid;
   place-items: center;
   padding: 20px;

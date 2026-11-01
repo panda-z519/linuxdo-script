@@ -1,9 +1,9 @@
 {
   "name": "linuxdo2obsidian",
-  "version": "0.9.5",
+  "version": "0.9.7",
   "private": true,
   "license": "MIT",
-  "description": "Save linux.do topics to Obsidian through Local REST API.",
+  "description": "Browser userscripts for reading and saving linux.do topics.",
   "repository": {
     "type": "git",
     "url": "https://github.com/panda-z519/linuxdo-script.git"
@@ -13,7 +13,9 @@
   },
   "homepage": "https://github.com/panda-z519/linuxdo-script",
   "scripts": {
-    "check": "node --check \"linux.do 帖子保存到 Obsidian.user.js\"",
-    "format": "npx --yes prettier --write \"linux.do 帖子保存到 Obsidian.user.js\" README.md package.json"
+    "check": "node --check \"userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js\" && node --check \"userscripts/topic-reader/linux.do 帖子弹框阅读.user.js\"",
+    "test": "node --test tests/*.test.js",
+    "archive-version": "node tools/archive-version.js",
+    "format": "npx --yes prettier --write \"userscripts/*/*.user.js\" \"tests/*.js\" \"tools/*.js\" README.md \"docs/*.md\" userscripts/README.md versions/README.md package.json"
   }
 }

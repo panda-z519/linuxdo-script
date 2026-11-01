@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>帖子弹框阅读 UI 原型</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --page-bg: #f7f7fb;
+        --surface: #ffffff;
+        --surface-glass: rgba(255, 255, 255, 0.94);
+        --content-glass: rgba(255, 255, 255, 0.98);
+        --text: #272433;
+        --muted: #716d7d;
+        --border: rgba(80, 72, 116, 0.14);
+        --purple: #6557d8;
+        --purple-soft: #f0edff;
+        --shadow: 0 24px 70px rgba(42, 35, 78, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        color: var(--text);
+        background: var(--page-bg);
+        font-family:
+          Inter,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .site {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .site-sidebar {
+        padding: 22px 16px;
+        border-right: 1px solid #eceaf4;
+        background: #f1f0f9;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 24px;
+        font-size: 14px;
+        font-weight: 750;
+      }
+
+      .logo-mark {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #111827 0 50%, #f6c945 50%);
+      }
+
+      .nav-item {
+        margin-bottom: 5px;
+        padding: 9px 12px;
+        border-radius: 9px;
+        color: #686376;
+        font-size: 13px;
+      }
+
+      .nav-item.active {
+        color: #5145c5;
+        background: #e7e3ff;
+        font-weight: 650;
+      }
+
+      .site-main {
+        padding: 30px clamp(24px, 7vw, 110px);
+      }
+
+      .site-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 26px;
+      }
+
+      .site-title {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .search {
+        width: 280px;
+        height: 38px;
+        padding: 0 14px;
+        border: 1px solid #e2dfec;
+        border-radius: 10px;
+        color: #8a8494;
+        background: #fff;
+        font-size: 13px;
+      }
+
+      .topic-card {
+        display: grid;
+        grid-template-columns: 36px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 14px 16px;
+        border: 1px solid #e8e6f0;
+        border-radius: 11px;
+        background: #fff;
+      }
+
+      .avatar {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: linear-gradient(135deg, #7b6fe6, #4e43b9);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .topic-name {
+        margin: 0 0 4px;
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .topic-meta {
+        margin: 0;
+        color: #8a8494;
+        font-size: 12px;
+      }
+
+      .reply-count {
+        color: #777184;
+        font-size: 12px;
+      }
+
+      .scrim {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        z-index: 10;
+        place-items: center;
+        padding: 32px;
+        background: rgba(43, 36, 72, 0.1);
+        transition: opacity 180ms ease;
+      }
+
+      .scrim.hidden {
+        pointer-events: none;
+        opacity: 0;
+      }
+
+      .dialog {
+        display: flex;
+        width: min(1480px, calc(100vw - 32px));
+        height: min(92vh, 980px);
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        border-radius: 20px;
+        background: var(--surface-glass);
+        box-shadow: var(--shadow);
+        transform: scale(1);
+        transition:
+          width 180ms ease,
+          height 180ms ease,
+          border-radius 180ms ease,
+          transform 180ms ease;
+      }
+
+      .dialog.expanded {
+        width: calc(100vw - 24px);
+        height: calc(100vh - 24px);
+        border-radius: 16px;
+      }
+
+      .dialog-header {
+        display: flex;
+        min-height: 58px;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 10px 8px 18px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.76);
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background: var(--purple);
+        box-shadow: 0 0 0 4px var(--purple-soft);
+      }
+
+      .dialog-title {
+        min-width: 0;
+        flex: 1;
+        margin: 0;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 650;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .icon-button {
+        display: inline-flex;
+        width: 42px;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 11px;
+        color: #575164;
+        background: transparent;
+        cursor: pointer;
+        transition:
+          color 160ms ease,
+          background 160ms ease;
+      }
+
+      .icon-button:hover {
+        color: var(--purple);
+        background: var(--purple-soft);
+      }
+
+      .icon-button:focus-visible {
+        outline: 3px solid rgba(101, 87, 216, 0.34);
+        outline-offset: 1px;
+      }
+
+      .icon-button svg {
+        width: 19px;
+        height: 19px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .dialog-body {
+        min-height: 0;
+        flex: 1;
+        overflow: auto;
+        background: var(--content-glass);
+      }
+
+      .topic-view {
+        position: relative;
+        width: min(860px, calc(100% - 64px));
+        margin: 0 auto;
+        padding: 36px 0 80px;
+      }
+
+      .category {
+        display: inline-flex;
+        margin-bottom: 11px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        color: #5145c5;
+        background: var(--purple-soft);
+        font-size: 12px;
+        font-weight: 650;
+      }
+
+      .post-title {
+        max-width: 760px;
+        margin: 0 0 12px;
+        font-size: clamp(25px, 3vw, 36px);
+        line-height: 1.28;
+        letter-spacing: -0.02em;
+      }
+
+      .post-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 30px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .post {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 14px;
+        padding: 24px 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .post:first-of-type {
+        border-top: 0;
+      }
+
+      .post-avatar {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: linear-gradient(135deg, #776ae0, #4e43b9);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .post-header {
+        display: flex;
+        align-items: baseline;
+        gap: 9px;
+        margin-bottom: 12px;
+      }
+
+      .author {
+        font-weight: 700;
+      }
+
+      .time,
+      .floor {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .floor {
+        margin-left: auto;
+      }
+
+      .post-content {
+        color: #383443;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      .post-content p {
+        margin: 0 0 14px;
+      }
+
+      .image-preview {
+        display: grid;
+        min-height: 200px;
+        place-items: center;
+        margin: 18px 0;
+        border: 1px solid #dedbea;
+        border-radius: 14px;
+        color: #756e84;
+        background:
+          radial-gradient(circle at 20% 20%, #d9d3ff, transparent 32%),
+          linear-gradient(135deg, #f4f1ff, #e9edf7);
+        font-size: 13px;
+      }
+
+      .post-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .action {
+        padding: 7px 11px;
+        border: 0;
+        border-radius: 8px;
+        color: #706a7c;
+        background: #f3f2f7;
+        font-size: 12px;
+      }
+
+      .timeline {
+        position: absolute;
+        top: 150px;
+        right: -40px;
+        width: 3px;
+        height: 260px;
+        border-radius: 3px;
+        background: #e4e0f2;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 34px;
+        left: -3px;
+        width: 9px;
+        height: 54px;
+        border-radius: 5px;
+        background: var(--purple);
+      }
+
+      .reopen {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 2;
+        padding: 11px 16px;
+        border: 0;
+        border-radius: 10px;
+        color: #fff;
+        background: var(--purple);
+        box-shadow: 0 10px 25px rgba(78, 67, 185, 0.28);
+        cursor: pointer;
+      }
+
+      @media (max-width: 700px) {
+        .site {
+          grid-template-columns: 1fr;
+        }
+
+        .site-sidebar {
+          display: none;
+        }
+
+        .site-main {
+          padding: 18px 14px;
+        }
+
+        .search {
+          display: none;
+        }
+
+        .scrim {
+          padding: 8px;
+        }
+
+        .dialog,
+        .dialog.expanded {
+          width: calc(100vw - 16px);
+          height: calc(100dvh - 16px);
+          border-radius: 16px;
+        }
+
+        .dialog-header {
+          min-height: 54px;
+          padding-left: 14px;
+        }
+
+        .icon-button {
+          width: 44px;
+          height: 44px;
+        }
+
+        .topic-view {
+          width: calc(100% - 28px);
+          padding-top: 24px;
+        }
+
+        .post-title {
+          font-size: 25px;
+        }
+
+        .post {
+          grid-template-columns: 36px minmax(0, 1fr);
+          gap: 10px;
+        }
+
+        .post-avatar {
+          width: 36px;
+          height: 36px;
+        }
+
+        .timeline {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .dialog,
+        .scrim,
+        .icon-button {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site" aria-hidden="true">
+      <aside class="site-sidebar">
+        <div class="logo"><span class="logo-mark"></span>LINUX DO</div>
+        <div class="nav-item active">话题</div>
+        <div class="nav-item">我的草稿</div>
+        <div class="nav-item">我的消息</div>
+        <div class="nav-item">近期活动</div>
+        <div class="nav-item">开发调优</div>
+        <div class="nav-item">资源荟萃</div>
+        <div class="nav-item">搞七捻三</div>
+      </aside>
+      <main class="site-main">
+        <div class="site-topbar">
+          <h1 class="site-title">最新话题</h1>
+          <div class="search">搜索</div>
+        </div>
+        <div class="topic-card">
+          <span class="avatar">A</span>
+          <div>
+            <p class="topic-name">如何设计一个真正好用的帖子预览弹框</p>
+            <p class="topic-meta">开发调优 · 2 分钟前</p>
+          </div>
+          <span class="reply-count">28 回复</span>
+        </div>
+        <div class="topic-card">
+          <span class="avatar">L</span>
+          <div>
+            <p class="topic-name">分享一下今天发现的几个实用工具</p>
+            <p class="topic-meta">资源荟萃 · 5 分钟前</p>
+          </div>
+          <span class="reply-count">16 回复</span>
+        </div>
+        <div class="topic-card">
+          <span class="avatar">M</span>
+          <div>
+            <p class="topic-name">Safari 上的 Userscripts 使用体验</p>
+            <p class="topic-meta">开发调优 · 8 分钟前</p>
+          </div>
+          <span class="reply-count">42 回复</span>
+        </div>
+        <div class="topic-card">
+          <span class="avatar">Z</span>
+          <div>
+            <p class="topic-name">最近社区里有什么值得收藏的帖子？</p>
+            <p class="topic-meta">搞七捻三 · 12 分钟前</p>
+          </div>
+          <span class="reply-count">35 回复</span>
+        </div>
+      </main>
+    </div>
+
+    <button class="reopen" type="button" hidden>重新打开原型</button>
+
+    <div class="scrim">
+      <section
+        class="dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="prototype-title"
+      >
+        <header class="dialog-header">
+          <span class="status-dot" aria-hidden="true"></span>
+          <h2 class="dialog-title" id="prototype-title">
+            如何设计一个真正好用的帖子预览弹框
+          </h2>
+          <button
+            class="icon-button expand"
+            type="button"
+            aria-label="展开为普通页面"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" />
+            </svg>
+          </button>
+          <button
+            class="icon-button close"
+            type="button"
+            aria-label="关闭并返回列表"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </header>
+
+        <div class="dialog-body">
+          <article class="topic-view">
+            <span class="category">开发调优</span>
+            <h1 class="post-title">如何设计一个真正好用的帖子预览弹框</h1>
+            <div class="post-stats">
+              <span>Alex · 10 分钟前</span><span>1.2k 浏览</span
+              ><span>36 赞</span><span>28 回复</span>
+            </div>
+
+            <section class="post">
+              <span class="post-avatar">A</span>
+              <div>
+                <header class="post-header">
+                  <span class="author">Alex</span
+                  ><span class="time">10 分钟前</span
+                  ><span class="floor">#1</span>
+                </header>
+                <div class="post-content">
+                  <p>
+                    我希望点击话题时不离开列表，而是在页面中央打开一个轻量、透明但仍然清晰可读的帖子窗口。
+                  </p>
+                  <p>
+                    帖子内部继续使用社区原有的点赞、回复、图片预览和楼层导航，脚本只负责弹框的视觉呈现。
+                  </p>
+                  <div class="image-preview">帖子中的图片预览区域</div>
+                </div>
+                <div class="post-actions">
+                  <button class="action">♡ 点赞</button
+                  ><button class="action">回复</button
+                  ><button class="action">更多</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="post">
+              <span class="post-avatar">L</span>
+              <div>
+                <header class="post-header">
+                  <span class="author">Lin</span
+                  ><span class="time">6 分钟前</span
+                  ><span class="floor">#2</span>
+                </header>
+                <div class="post-content">
+                  <p>
+                    这个方向更适合阅读：背景能看见，但正文不会透得发灰；标题栏也属于弹框内部，不会像浏览器工具条一样抢视线。
+                  </p>
+                </div>
+                <div class="post-actions">
+                  <button class="action">♡ 点赞</button
+                  ><button class="action">回复</button>
+                </div>
+              </div>
+            </section>
+            <span class="timeline" aria-hidden="true"></span>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const scrim = document.querySelector(".scrim");
+      const dialog = document.querySelector(".dialog");
+      const reopen = document.querySelector(".reopen");
+      const closeButton = document.querySelector(".close");
+
+      document.querySelector(".expand").addEventListener("click", () => {
+        dialog.classList.toggle("expanded");
+      });
+
+      function closePrototype() {
+        scrim.classList.add("hidden");
+        reopen.hidden = false;
+      }
+
+      closeButton.addEventListener("click", closePrototype);
+      scrim.addEventListener("click", (event) => {
+        if (event.target === scrim) closePrototype();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closePrototype();
+      });
+      reopen.addEventListener("click", () => {
+        scrim.classList.remove("hidden");
+        reopen.hidden = true;
+        closeButton.focus();
+      });
+    </script>
+  </body>
+</html>

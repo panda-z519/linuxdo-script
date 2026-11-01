@@ -2,21 +2,28 @@
 
 ## Project Structure & Module Organization
 
-This repository contains a browser userscript that saves linux.do topics into Obsidian through the Local REST API.
+This repository ships two independent linux.do userscripts: saving topics into Obsidian through the Local REST API, and reading topics in an in-page dialog.
 
-- `linux.do 帖子保存到 Obsidian.user.js`: main userscript, including metadata, UI, settings, scraping, Markdown generation, and Obsidian API calls.
-- `README.md`: user-facing installation, configuration, and troubleshooting guide.
-- `package.json`: project metadata and maintenance scripts.
-- `.gitignore`: local ignore rules.
+- `userscripts/<script>/<name>.user.js`: current source of each userscript, one script per folder. These paths are the install URLs, so released scripts must not move.
+  - `userscripts/save-obsidian/`: metadata, UI, settings, scraping, Markdown generation, Obsidian API calls.
+  - `userscripts/topic-reader/`: link click interception, dialog chrome, native route handoff, closing navigation.
+- `versions/<script>/<version>/`: immutable release snapshots, written by `npm run archive-version` whenever `@version` is bumped.
+- `tests/`: `node --test` suites covering pure functions, Safari Userscripts metadata, cross-script layering, and the version archive contract.
+- `docs/`: user guides, UI spec, screenshots, and the HTML prototype; `docs/README.md` is the index.
+- `.agents/notes/`: decision notes under `implemented/` and `proposed/`; read them before changing architecture, cross-script contracts, or document formats.
+- `tools/`: repository maintenance scripts.
+- `README.md`, `AGENTS.md`, `package.json`, `.gitignore`, `LICENSE`: repository metadata.
 
-There is currently no dedicated `src/`, `tests/`, or assets directory. Keep changes close to the userscript unless a new directory clearly reduces complexity.
+Keep changes inside the affected userscript unless a new directory clearly reduces complexity.
 
 ## Build, Test, and Development Commands
 
-- `npm run check`: runs `node --check` against the userscript to catch JavaScript syntax errors.
-- `npm run format`: formats the userscript, `README.md`, and `package.json` with Prettier via `npx`.
+- `npm run check`: runs `node --check` against both userscripts to catch JavaScript syntax errors.
+- `npm test`: runs the `node --test` suites in `tests/`.
+- `npm run format`: formats both userscripts, the tests, the tools, `README.md`, `docs/*.md`, and `package.json` with Prettier via `npx`.
+- `npm run archive-version`: copies each current userscript into `versions/<script>/<@version>/`. Run it as part of a release, after bumping `@version`; existing snapshots are only overwritten with `--force`.
 
-For manual testing, install or update the userscript in Tampermonkey or Userscripts, open a linux.do topic page, and verify saving against a local Obsidian vault with the Local REST API plugin enabled.
+For manual testing, install or update the userscripts in Tampermonkey or Userscripts, open linux.do, and verify the affected flow: saving against a local Obsidian vault with the Local REST API plugin, or opening topics in the reader dialog.
 
 ## Coding Style & Naming Conventions
 
@@ -27,22 +34,25 @@ Use plain JavaScript compatible with userscript managers. Follow the existing st
 - `snake_case` for settings keys and local state, matching existing names such as `api_url` and `is_saving`.
 - `const` by default; use `let` only for mutable state.
 - Keep helper functions small and colocated with related behavior.
+- Script folders use lowercase English slugs (`save-obsidian`, `topic-reader`); userscript filenames keep the Chinese `@name` wording.
+- Bump `@version` in the userscript for every released change, then run `npm run archive-version` so `versions/` and `userscripts/` stay identical.
 
 Run `npm run format` before submitting changes that touch formatted files.
 
 ## Testing Guidelines
 
-There is no automated test suite yet. At minimum, run:
+Run both before submitting:
 
 ```sh
 npm run check
+npm test
 ```
 
-For behavior changes, manually test the affected flow on a real linux.do topic page. Cover the relevant save modes, image options, preview behavior, and error handling when touching those areas.
+Add a `node --test` case in `tests/` when changing pure logic, userscript metadata, the layering contract between the two scripts, or the version archive layout. For behavior changes, manually test the affected flow on a real linux.do page: cover the relevant save modes, image options, preview, reader dialog behavior, and error handling for the areas you touched.
 
 ## Commit & Pull Request Guidelines
 
-No Git history is available in this checkout, so use concise, descriptive commit messages. Prefer a clear imperative form, for example:
+Use concise, descriptive commit messages and keep the userscript change, its archived version, and its docs in one commit. Prefer a clear imperative form, for example:
 
 ```text
 Fix markdown image attachment paths

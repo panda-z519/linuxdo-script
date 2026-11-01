@@ -1,211 +1,76 @@
-# Linuxdo 脚本
+# LinuxDo 用户脚本
 
-把 linux.do 主题帖保存为 Obsidian Markdown 笔记的浏览器 Userscript。脚本通过 Obsidian 社区插件 **Local REST API** 写入 Vault，支持保存主帖、评论、图片附件和分类目录。
+这个仓库收录面向 linux.do 的浏览器用户脚本，包含保存主题到 Obsidian 和在弹框中阅读主题的两个独立脚本。
 
-## 主要功能
+## 脚本状态
 
-- 一键保存 linux.do 主题帖，不需要手动滚动加载全部评论。
-- 支持保存全部楼层、只保存主帖、主帖加楼主回复。
-- 支持楼层范围过滤，例如 `1-20,35,50-`。
-- 支持最低点赞过滤，主帖始终保留。
-- 支持主帖图片和评论图片分别控制。
-- 支持下载图片到 Obsidian 附件目录，并按分类目录自动区分。
-- 支持分类映射，把 linux.do 分类保存到自己的 Obsidian 目录。
-- 支持重复保存策略：覆盖、合并新增楼层、跳过、生成时间戳新文件。
-- 支持保存前大窗口预览，预览框可拖拽调整大小。
-- 右下角操作按钮组可以拖动，位置会保存在脚本存储中。
-- 支持快捷键保存。
+当前版本放在 [`userscripts/`](userscripts/README.md)，已发布的历史版本按版本号归档在 [`versions/`](versions/README.md)。
 
-## 安装
+| 脚本                                                                                                     | 版本  | 状态   | 用途                                          |
+| -------------------------------------------------------------------------------------------------------- | ----- | ------ | --------------------------------------------- |
+| [linux.do 帖子保存到 Obsidian.user.js](<userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js>) | 0.9.7 | 已实现 | 将主题帖、评论和可选图片附件保存到 Obsidian。 |
+| [linux.do 帖子弹框阅读.user.js](<userscripts/topic-reader/linux.do 帖子弹框阅读.user.js>)                | 5.0.6 | 已实现 | 复用原生站内路由，以弹框模式查看帖子。        |
 
-1. 安装浏览器脚本管理器：
-   - Chrome / Edge / Firefox：Tampermonkey
-   - Safari：Userscripts 或 Tampermonkey
-2. 新建脚本，把 `linux.do 帖子保存到 Obsidian.user.js` 的内容粘贴进去。
-3. 保存并启用脚本。
-4. 打开 linux.do 主题页，会出现“保存到 Obsidian”按钮和设置按钮；可以按住按钮组拖动到合适位置。
+## 文档导航
 
-也可以直接打开 [GitHub Raw 脚本文件](https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/linux.do%20%E5%B8%96%E5%AD%90%E4%BF%9D%E5%AD%98%E5%88%B0%20Obsidian.user.js)，由脚本管理器安装或更新。
+- [文档索引](docs/README.md)
+- [Obsidian 保存脚本使用说明](<docs/Obsidian 保存脚本使用说明.md>)
+- [帖子弹框阅读脚本使用说明](docs/帖子弹框阅读脚本使用说明.md)
 
-## Obsidian 配置
+## 快速开始：保存到 Obsidian
 
-1. 在 Obsidian 中安装社区插件 `Local REST API`。
-2. 启用插件里的 HTTP 服务。
-3. 复制插件设置里的 API Key。
-4. 打开脚本设置，填写：
-   - `Local REST API 地址`：默认 `http://127.0.0.1:27123`
-   - `API Key`：粘贴 Local REST API 的 Key
-5. 点击“测试服务”，显示“服务可以连接。”后保存设置。
+1. 安装 Tampermonkey（Chrome、Edge、Firefox）或 Userscripts/Tampermonkey（Safari）。
+2. 新建用户脚本，粘贴 [`linux.do 帖子保存到 Obsidian.user.js`](<userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js>) 的内容并启用。
+3. 在 Obsidian 启用 `Local REST API` 社区插件及其 HTTP 服务，复制 API Key。
+4. 打开 linux.do 主题页，在右下角设置中填写地址和 API Key，再点击“测试服务”。
 
-API Key 可以直接粘贴这些格式，脚本会自动提取真正的 Key：
+安装、保存路径、附件、过滤、重复保存策略、预览、快捷键、权限与故障排查请见[完整使用说明](<docs/Obsidian 保存脚本使用说明.md>)。
+
+## 快速开始：弹框阅读
+
+在浏览器脚本管理器中新建脚本，将 [`linux.do 帖子弹框阅读.user.js`](<userscripts/topic-reader/linux.do 帖子弹框阅读.user.js>) 的内容粘贴并启用。浏览 linux.do 列表、搜索或分类页面时，普通左键点击主题链接会由站内原生路由打开帖子，同时主内容区域提升为弹框并隐藏侧边栏；点赞、回复、用户卡、图片预览和楼层导航仍使用 linux.do 自带功能。弹框工具栏提供返回列表、切换普通页面和关闭。
+
+这个脚本不需要 Obsidian 设置或额外跨域权限。交互方式、接口失败处理和安全边界见[使用说明](docs/帖子弹框阅读脚本使用说明.md)。
+
+## 目录结构
 
 ```text
-abc123
-Bearer abc123
-Authorization: Bearer abc123
+userscripts/<脚本>/<脚本名>.user.js   当前版本，同时是安装地址
+versions/<脚本>/<版本>/<脚本名>.user.js  已发布版本的只读快照
+docs/                                使用说明、UI 设计稿、截图和原型
+tests/                               node --test 回归测试
+tools/                               仓库维护脚本
+.agents/notes/                       决策记录（为什么这样改、放弃了什么）
 ```
 
-## 保存路径
+## 版本与回滚
 
-默认笔记基础目录是：
+两个脚本各自独立维护版本号，都在文件头的 `// @version` 里。发布流程：
 
-```text
-LinuxDo
-```
+1. 修改脚本并提升 `@version`。
+2. 运行 `npm run archive-version`，当前内容会复制到 `versions/<脚本>/<版本>/`。
+3. 运行 `npm run check` 和 `npm test`，确认归档与当前脚本一致。
 
-脚本会自动追加分类目录。比如帖子分类是 `开发调优`，笔记会保存到：
-
-```text
-LinuxDo/开发调优/{id}-{title}.md
-```
-
-如果配置分类映射：
-
-```text
-开发调优=技术/LinuxDo
-资源荟萃=资料/LinuxDo
-```
-
-那么 `开发调优` 分类会保存到：
-
-```text
-LinuxDo/技术/LinuxDo/{id}-{title}.md
-```
-
-## 附件路径
-
-默认附件目录是：
-
-```text
-附件/linuxdo
-```
-
-开启“下载图片到附件目录”后，附件也会追加分类映射后的目录。例如分类映射为 `开发调优=技术/LinuxDo` 时，图片会保存到：
-
-```text
-附件/linuxdo/技术/LinuxDo/{topic_id}-{floor}-{index}.ext
-```
-
-Markdown 里的图片链接会自动替换成本地附件路径。图片下载失败不会中断保存，脚本会保留原始远程图片链接。
-
-## 常用设置
-
-### 文件名模板
-
-默认模板：
-
-```text
-{id}-{title}
-```
-
-可用变量：
-
-- `{id}`：主题 ID
-- `{title}`：主题标题
-- `{category}`：分类名，使用分类映射后的值
-- `{date}`：主题创建日期
-- `{slug}`：主题 slug
-- `{timestamp}`：当前时间戳
-
-### 重复保存策略
-
-- `覆盖同名笔记`：直接覆盖已有文件。
-- `合并新增楼层`：读取已有笔记，只追加新楼层。
-- `已有同名笔记时跳过`：文件存在时不写入。
-- `生成带时间戳的新笔记`：每次保存一个新文件。
-
-### 帖子范围
-
-- `全部楼层`：保存主帖和所有可见评论。
-- `主帖 + 楼主回复`：只保存主帖作者的内容。
-- `只保存主帖`：只保存 1 楼。
-
-### 楼层范围
-
-留空表示不过滤。示例：
-
-```text
-1-20,35,50-
-```
-
-含义是保存 1 到 20 楼、第 35 楼、以及 50 楼之后的内容。
-
-### 保存前预览
-
-开启后，脚本会先弹出渲染后的 Markdown 预览。预览窗口默认较宽，只显示最终效果，不显示源码对比；窗口右下角可拖拽调整大小。
-
-### 快捷键
-
-开启“启用快捷键保存”后可使用快捷键保存。默认：
-
-```text
-mod+shift+s
-```
-
-`mod` 在 macOS 上表示 `Command`，在 Windows/Linux 上表示 `Ctrl`。
-
-## 常见问题
-
-### HTTP 401
-
-通常是 API Key 不正确或已经变更。
-
-处理方式：
-
-1. 打开 Obsidian 的 Local REST API 插件设置。
-2. 重新复制 API Key。
-3. 粘贴到脚本设置里。
-4. 点击“测试服务”。
-
-### HTTP 0
-
-HTTP 0 表示脚本没有拿到真正的 HTTP 响应，常见原因是：
-
-- Obsidian 没有运行。
-- Local REST API 插件没有启用。
-- HTTP 服务没有启用。
-- 地址或端口填错。
-- 浏览器或脚本管理器没有放行本机连接权限。
-- HTTPS 页面请求 HTTP 本机服务时被浏览器拦截。
-
-建议先在浏览器地址栏打开：
-
-```text
-http://127.0.0.1:27123
-```
-
-确认服务能访问后，再回脚本里测试。
-
-### 看不到按钮
-
-- 确认脚本已启用。
-- 刷新 linux.do 页面。
-- 确认当前页面是主题页。
-- Safari Userscripts 需要点一次 `Refresh view`。
+回滚时打开 `versions/` 下对应版本的文件，复制全部内容替换脚本管理器里的当前脚本即可。约定与校验规则见 [`versions/README.md`](versions/README.md)。
 
 ## 开发
 
-本项目是单文件 Userscript，没有构建步骤。
+项目当前没有构建步骤。运行自动回归测试：
+
+```sh
+npm test
+```
+
+检查两个脚本的 JavaScript 语法：
 
 ```sh
 npm run check
 ```
 
-检查脚本语法。
+格式化脚本、测试、README、详细文档和 `package.json`：
 
 ```sh
 npm run format
 ```
 
-使用 Prettier 格式化脚本、README 和 `package.json`。
-
-## 权限说明
-
-脚本需要这些权限：
-
-- `GM.getValue` / `GM.setValue`：保存脚本设置。
-- `GM.xmlHttpRequest`：访问 Obsidian Local REST API 和下载图片。
-- `@connect 127.0.0.1` / `@connect localhost`：连接本机 Obsidian 服务。
-- `@connect *`：下载帖子图片，图片可能来自 linux.do CDN 或外部图床。
-
-脚本不会修改 linux.do 上的内容，也不会把 API Key 发送到 linux.do。
+修改脚本后，应在真实 linux.do 页面手动验证相关路径；保存脚本还需在本机 Obsidian Vault 验证写入。`npm test` 覆盖阅读脚本的主题 URL、点击拦截、安全协议和 Safari Userscripts 元数据边界，检查两个脚本的悬浮层与弹框层级约定，并校验 `versions/` 归档与当前版本一致。
