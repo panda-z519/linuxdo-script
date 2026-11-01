@@ -21,6 +21,8 @@
 
 也可打开 [GitHub Raw 脚本文件](https://raw.githubusercontent.com/panda-z519/linuxdo-script/main/userscripts/save-obsidian/linux.do%20%E5%B8%96%E5%AD%90%E4%BF%9D%E5%AD%98%E5%88%B0%20Obsidian.user.js)，由脚本管理器安装或更新。
 
+也可以从 Greasy Fork 直接安装：<https://greasyfork.org/zh-CN/scripts/587200>。
+
 已发布的历史版本按版本号归档在 [`versions/save-obsidian/`](../versions/README.md)，需要回滚时复制对应版本文件的全部内容替换当前脚本。
 
 ## 配置 Obsidian
