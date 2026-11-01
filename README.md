@@ -73,4 +73,13 @@ npm run check
 npm run format
 ```
 
+归档当前版本并校验发布地址：
+
+```sh
+npm run archive-version
+npm run check-published
+```
+
+发版步骤（GitHub 主源、Greasy Fork 镜像、回滚方式）见[发布流程](docs/发布流程.md)。
+
 修改脚本后，应在真实 linux.do 页面手动验证相关路径；保存脚本还需在本机 Obsidian Vault 验证写入。`npm test` 覆盖阅读脚本的主题 URL、点击拦截、安全协议和 Safari Userscripts 元数据边界，检查两个脚本的悬浮层与弹框层级约定，并校验 `versions/` 归档与当前版本一致。

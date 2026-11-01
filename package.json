@@ -16,6 +16,7 @@
     "check": "node --check \"userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js\" && node --check \"userscripts/topic-reader/linux.do 帖子弹框阅读.user.js\"",
     "test": "node --test tests/*.test.js",
     "archive-version": "node tools/archive-version.js",
+    "check-published": "node tools/check-published.js",
     "format": "npx --yes prettier --write \"userscripts/*/*.user.js\" \"tests/*.js\" \"tools/*.js\" README.md \"docs/*.md\" userscripts/README.md versions/README.md package.json"
   }
 }

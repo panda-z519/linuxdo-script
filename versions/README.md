@@ -22,6 +22,8 @@ versions/<脚本目录>/<版本号>/<脚本文件名>
 | `topic-reader`  | `5.0.7` | [linux.do 帖子弹框阅读.user.js](<topic-reader/5.0.7/linux.do 帖子弹框阅读.user.js>)                |
 | `topic-reader`  | `5.0.6` | [linux.do 帖子弹框阅读.user.js](<topic-reader/5.0.6/linux.do 帖子弹框阅读.user.js>)                |
 
+发版与镜像同步的完整步骤见[发布流程](../docs/发布流程.md)。
+
 ## 生成与使用
 
 - 新增归档：运行 `npm run archive-version`（脚本在 [`tools/archive-version.js`](../tools/archive-version.js)）。它读取每个当前脚本的 `@version`，复制到对应目录。

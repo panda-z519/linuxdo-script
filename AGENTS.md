@@ -22,6 +22,9 @@ Keep changes inside the affected userscript unless a new directory clearly reduc
 - `npm test`: runs the `node --test` suites in `tests/`.
 - `npm run format`: formats both userscripts, the tests, the tools, `README.md`, `docs/*.md`, and `package.json` with Prettier via `npx`.
 - `npm run archive-version`: copies each current userscript into `versions/<script>/<@version>/`. Run it as part of a release, after bumping `@version`; existing snapshots are only overwritten with `--force`.
+- `npm run check-published`: fetches the published raw URLs and compares their `@version` with the local scripts; run it after `git push`.
+
+Release policy: GitHub is the single source of truth and Greasy Fork mirrors it from the raw URLs. Follow `docs/发布流程.md` for the version bump, archive, push, and mirror-sync steps.
 
 For manual testing, install or update the userscripts in Tampermonkey or Userscripts, open linux.do, and verify the affected flow: saving against a local Obsidian vault with the Local REST API plugin, or opening topics in the reader dialog.
 
