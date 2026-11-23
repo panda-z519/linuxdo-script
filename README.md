@@ -10,9 +10,9 @@
 | -------------------------------------------------------------------------------------------------------- | ----- | ------ | --------------------------------------------- |
 | [linux.do 帖子保存到 Obsidian.user.js](<userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js>) | 0.9.8 | 已实现 | 将主题帖、评论和可选图片附件保存到 Obsidian。 |
 | [linux.do 帖子弹框阅读.user.js](<userscripts/topic-reader/linux.do 帖子弹框阅读.user.js>)                | 5.0.7 | 已实现 | 复用原生站内路由，以弹框模式查看帖子。        |
-| [GitHub 中文化.user.js](<userscripts/github-chinese/GitHub 中文化.user.js>)                                | 1.7.0 | 已实现 | 用官方词典把 GitHub 界面翻译成简体中文。       |
+| [GitHub 中文化.user.js](<userscripts/github-chinese/GitHub 中文化.user.js>)                              | 1.7.0 | 已实现 | 用官方词典把 GitHub 界面翻译成简体中文。      |
 
-两个脚本同时发布在 Greasy Fork：保存脚本 <https://greasyfork.org/zh-CN/scripts/587200>、弹框阅读 <https://greasyfork.org/zh-CN/scripts/603257>，可以从站内直接安装。
+三个脚本同时发布在 Greasy Fork：保存脚本 <https://greasyfork.org/zh-CN/scripts/587200>、弹框阅读 <https://greasyfork.org/zh-CN/scripts/603257>、GitHub 中文化 <https://greasyfork.org/zh-CN/scripts/606846>，可以从站内直接安装。
 
 ## 文档导航
 
