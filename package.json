@@ -3,7 +3,7 @@
   "version": "0.9.8",
   "private": true,
   "license": "MIT",
-  "description": "Browser userscripts for reading and saving linux.do topics.",
+  "description": "Browser userscripts: linux.do reading and saving, plus GitHub UI translation.",
   "repository": {
     "type": "git",
     "url": "https://github.com/panda-z519/linuxdo-script.git"
@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/panda-z519/linuxdo-script",
   "scripts": {
-    "check": "node --check \"userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js\" && node --check \"userscripts/topic-reader/linux.do 帖子弹框阅读.user.js\"",
+    "check": "node --check \"userscripts/save-obsidian/linux.do 帖子保存到 Obsidian.user.js\" && node --check \"userscripts/topic-reader/linux.do 帖子弹框阅读.user.js\" && node --check \"userscripts/github-chinese/GitHub 中文化.user.js\"",
     "test": "node --test tests/*.test.js",
     "archive-version": "node tools/archive-version.js",
     "check-published": "node tools/check-published.js",

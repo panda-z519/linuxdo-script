@@ -6,8 +6,9 @@
 | ---------------- | -------------------------------------------------------------------------------------------- | -------- | --------------------------------------------- |
 | `save-obsidian/` | [linux.do 帖子保存到 Obsidian.user.js](<save-obsidian/linux.do 帖子保存到 Obsidian.user.js>) | 0.9.8    | 通过 Local REST API 把主题帖保存到 Obsidian。 |
 | `topic-reader/`  | [linux.do 帖子弹框阅读.user.js](<topic-reader/linux.do 帖子弹框阅读.user.js>)                | 5.0.7    | 在当前页面以弹框阅读主题，复用站点原生路由。  |
+| `github-chinese/` | [GitHub 中文化.user.js](<github-chinese/GitHub 中文化.user.js>) | 1.7.0 | 用官方词典把 GitHub 界面翻译成简体中文。 |
 
-两个脚本互相独立，可以只装其中一个。同时安装时，保存按钮会显示在阅读弹框之上。
+三个脚本互相独立，可以只装其中一个。同时安装两个 linux.do 脚本时，保存按钮会显示在阅读弹框之上。
 
 ## 安装
 
